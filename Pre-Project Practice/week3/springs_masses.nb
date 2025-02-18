@@ -1,0 +1,525 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 12.3' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       158,          7]
+NotebookDataLength[     18584,        517]
+NotebookOptionsPosition[     15769,        459]
+NotebookOutlinePosition[     16137,        475]
+CellTagsIndexPosition[     16094,        472]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+
+Cell[CellGroupData[{
+Cell["\<\
+Following from the notes we will study a simple case of three masses (m) \
+connected by two springs (k, a).\
+\>", "Subsection",
+ CellChangeTimes->{{3.8737906090390806`*^9, 
+  3.8737906345988927`*^9}},ExpressionUUID->"e237f15c-c56f-4af0-bfb2-\
+082eb2ad2a57"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"ODEmatrix", " ", "=", " ", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{
+       FractionBox[
+        RowBox[{"-", "k"}], "m"], ",", 
+       FractionBox["k", "m"], ",", "0"}], "}"}], ",", " ", 
+     RowBox[{"{", 
+      RowBox[{
+       FractionBox["k", "m"], ",", " ", 
+       RowBox[{
+        RowBox[{"-", "2"}], 
+        FractionBox["k", "m"]}], ",", " ", 
+       FractionBox["k", "m"]}], "}"}], ",", " ", 
+     RowBox[{"{", 
+      RowBox[{"0", ",", " ", 
+       FractionBox["k", "m"], ",", " ", 
+       RowBox[{"-", 
+        FractionBox["k", "m"]}]}], "}"}]}], "}"}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"Avec", "=", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{
+      RowBox[{"-", 
+       FractionBox["k", "m"]}], "a"}], ",", "0", ",", 
+     RowBox[{
+      FractionBox["k", "m"], "a"}]}], "}"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"Statevec", "=", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"x1", "[", "t", "]"}], ",", 
+     RowBox[{"x2", "[", "t", "]"}], ",", 
+     RowBox[{"x3", "[", "t", "]"}]}], "}"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{"ODEmatrix", "//", "MatrixForm"}]}], "Input",
+ CellChangeTimes->{{3.8737818062367644`*^9, 3.873781998537905*^9}},
+ CellLabel->"In[1]:=",ExpressionUUID->"c58f83d5-473a-4d57-ba36-4958d614efe9"],
+
+Cell[BoxData[
+ TagBox[
+  RowBox[{"(", "\[NoBreak]", GridBox[{
+     {
+      RowBox[{"-", 
+       FractionBox["k", "m"]}], 
+      FractionBox["k", "m"], "0"},
+     {
+      FractionBox["k", "m"], 
+      RowBox[{"-", 
+       FractionBox[
+        RowBox[{"2", " ", "k"}], "m"]}], 
+      FractionBox["k", "m"]},
+     {"0", 
+      FractionBox["k", "m"], 
+      RowBox[{"-", 
+       FractionBox["k", "m"]}]}
+    },
+    GridBoxAlignment->{"Columns" -> {{Center}}, "Rows" -> {{Baseline}}},
+    GridBoxSpacings->{"Columns" -> {
+        Offset[0.27999999999999997`], {
+         Offset[0.7]}, 
+        Offset[0.27999999999999997`]}, "Rows" -> {
+        Offset[0.2], {
+         Offset[0.4]}, 
+        Offset[0.2]}}], "\[NoBreak]", ")"}],
+  Function[BoxForm`e$, 
+   MatrixForm[BoxForm`e$]]]], "Output",
+ CellChangeTimes->{{3.8737819312665825`*^9, 3.873781998965755*^9}, 
+   3.8737910568629494`*^9, 3.873792545498026*^9, 3.8742206946906633`*^9, 
+   3.885141336484255*^9, 3.8852994766381493`*^9, 3.885299815406499*^9, 
+   3.885299885449987*^9},
+ CellLabel->
+  "Out[4]//MatrixForm=",ExpressionUUID->"f38acdff-b80f-4548-85ae-\
+228df560364d"]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["\<\
+We are interested in transforming our equations into the eigenbasis. \
+Thankfully eigenanalysis is easy in Mathematica.\
+\>", "Subsection",
+ CellChangeTimes->{{3.8737906473561287`*^9, 3.8737906798021784`*^9}, 
+   3.8737907575348167`*^9},ExpressionUUID->"1c450b6f-2382-419f-a49a-\
+8c2d5276b75a"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"Eigsys", "=", 
+  RowBox[{"Eigensystem", "[", "ODEmatrix", "]"}]}]], "Input",
+ CellChangeTimes->{{3.8737821290250025`*^9, 3.873782135276584*^9}, {
+  3.8737821721184177`*^9, 3.873782174738284*^9}},
+ CellLabel->"In[5]:=",ExpressionUUID->"4c65e35a-7cd0-4532-ab97-791d16da99b7"],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"-", 
+      FractionBox[
+       RowBox[{"3", " ", "k"}], "m"]}], ",", 
+     RowBox[{"-", 
+      FractionBox["k", "m"]}], ",", "0"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"1", ",", 
+       RowBox[{"-", "2"}], ",", "1"}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"-", "1"}], ",", "0", ",", "1"}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"1", ",", "1", ",", "1"}], "}"}]}], "}"}]}], "}"}]], "Output",
+ CellChangeTimes->{3.8737821369535866`*^9, 3.8737821767494698`*^9, 
+  3.873791056980322*^9, 3.8737925458352637`*^9, 3.8742206947234755`*^9, 
+  3.8851413404118137`*^9, 3.8852994767145967`*^9, 3.885299815494269*^9, 
+  3.88529988552565*^9},
+ CellLabel->"Out[5]=",ExpressionUUID->"182126c7-fe77-4836-9847-f4dac9ba01cc"]
+}, Open  ]]
+}, Open  ]],
+
+Cell["\<\
+Make sure you can qualitatively explain the three eigenstates with their \
+respective eigenvalue. Remember that the eigenvalues will be associated with \
+the frequency of oscillation.\
+\>", "Subsection",
+ CellChangeTimes->{{3.8737907130849276`*^9, 3.8737907533466682`*^9}, 
+   3.885142902498005*^9},ExpressionUUID->"78cd5db0-83db-4dc2-aa31-\
+6848dd0e2e85"],
+
+Cell[CellGroupData[{
+
+Cell[TextData[{
+ "Construct the transformation matrices discussed in the notes. Remember that \
+the ",
+ StyleBox["columns",
+  FontSlant->"Italic"],
+ " of TmatrixInv should be the eigenvectors."
+}], "Subsection",
+ CellChangeTimes->{{3.873790686996436*^9, 3.873790693031124*^9}, {
+  3.8737907595000725`*^9, 3.873790766588785*^9}, {3.876901022124322*^9, 
+  3.8769010223612876`*^9}, {3.885142909676895*^9, 
+  3.885142945498329*^9}},ExpressionUUID->"9505c853-0629-4dcf-9b88-\
+0bb9a90358bb"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"TmatrixInv", "="}], 
+  RowBox[{"(*", 
+   RowBox[{"Your", " ", "code", " ", "here"}], "*)"}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"Tmatrix", "=", 
+    RowBox[{"Inverse", "[", "TmatrixInv", "]"}]}], ";"}], 
+  "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{"Tmatrix", "//", "MatrixForm"}], "\[IndentingNewLine]", 
+ RowBox[{"TmatrixInv", "//", "MatrixForm"}]}], "Input",
+ CellChangeTimes->{{3.873782163985197*^9, 3.87378226966069*^9}, {
+   3.873790988056046*^9, 3.873791013960964*^9}, {3.873791106495102*^9, 
+   3.8737911430966425`*^9}, {3.876901031709944*^9, 3.876901038122563*^9}, {
+   3.885141349279127*^9, 3.885141356216004*^9}, {3.885141543871881*^9, 
+   3.8851415490987873`*^9}, 3.885299454067257*^9, {3.88530002578076*^9, 
+   3.8853000276448193`*^9}},
+ EmphasizeSyntaxErrors->True,
+ CellLabel->"In[21]:=",ExpressionUUID->"f292f453-af85-4c4a-800d-c7d9e8147eb7"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[TextData[{
+ "Essentially T will map our physical coordinates (x1, x2, x3) into the \
+eigenstates, or normal modes (y1, y2, y3). ",
+ Cell[BoxData[
+  FormBox[
+   SuperscriptBox["T", 
+    RowBox[{"-", "1"}]], TraditionalForm]],ExpressionUUID->
+  "25193a23-7cbf-4f56-98d8-3d75ea683c3c"],
+ " does the opposite.\nShow that T acting on X=(1,-2,1) indeed gives purely \
+the first eigenstate. Similarly, show that the state Y=(0,1,0) gives \
+X=(-1,0,1)"
+}], "Subsection",
+ CellChangeTimes->{{3.8737907775720186`*^9, 3.8737909343808455`*^9}, {
+  3.873791161853897*^9, 3.873791190040887*^9}, {3.874220759976622*^9, 
+  3.8742207601753225`*^9}},ExpressionUUID->"cf3d0237-0d43-441c-891f-\
+91bba9ab2ef4"],
+
+Cell[BoxData[""], "Input",
+ CellChangeTimes->{
+  3.876901066705535*^9, {3.885141414750856*^9, 3.8851415959367867`*^9}, {
+   3.885299527810398*^9, 3.88529955004882*^9}, 3.88530009385299*^9},
+ CellLabel->"In[21]:=",ExpressionUUID->"22762b43-f21a-4905-ad96-a70b547f5183"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{
+  "Use", " ", "the", " ", "results", " ", "above", " ", "to", " ", 
+   "construct", " ", "the", " ", "matrix", " ", "from", " ", 
+   SuperscriptBox["TQT", 
+    RowBox[{"-", "1"}]], " ", "where", " ", "Q", " ", "is", " ", "the", " ", 
+   "original", " ", "ODE", " ", 
+   RowBox[{"matrix", ".", "\[IndentingNewLine]", "Show"}], " ", "it", " ", 
+   "is", " ", "the", " ", "same", " ", "as", " ", "the", " ", "diagonal", " ",
+    "matrix", " ", "of", " ", "eigenvalues"}], 
+  "\[IndentingNewLine]"}]], "Subsection",
+ CellChangeTimes->{{3.873791213680372*^9, 3.873791274749666*^9}, {
+   3.8742207426609225`*^9, 3.8742207927010937`*^9}, 
+   3.8769010857215405`*^9},ExpressionUUID->"35e20cdf-525c-41a7-b019-\
+335c8870017f"],
+
+Cell[BoxData[""], "Input",
+ CellChangeTimes->{{3.8851416212400913`*^9, 3.885141649193345*^9}, {
+   3.8852996125233297`*^9, 3.8852996135784187`*^9}, {3.885299865344236*^9, 
+   3.8852998700696373`*^9}, 3.88530011312416*^9},
+ CellLabel->"In[22]:=",ExpressionUUID->"7c5b5eb0-4275-40db-a282-366587f6be52"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["\<\
+Let\[CloseCurlyQuote]s print out each set of ODEs to show the reduction of \
+complexity. Note however that even in the second case it would be simpler \
+labelling as yi[t] rather than xi[t]\
+\>", "Subsection",
+ CellChangeTimes->{{3.8737914756559334`*^9, 3.8737914884855356`*^9}, {
+  3.8737917024804187`*^9, 
+  3.8737917223895664`*^9}},ExpressionUUID->"d25b8104-8af6-41c8-ac20-\
+fa8da6683e5b"],
+
+Cell[BoxData[
+ RowBox[{"For", " ", "[", 
+  RowBox[{
+   RowBox[{"i", "=", "1"}], ",", 
+   RowBox[{"i", "<=", 
+    RowBox[{"Length", "[", "Statevec", "]"}]}], ",", 
+   RowBox[{"i", "+=", "1"}], ",", "\[IndentingNewLine]", "\t", 
+   RowBox[{"Print", "[", 
+    RowBox[{
+     RowBox[{"D", "[", 
+      RowBox[{
+       RowBox[{"Statevec", "[", 
+        RowBox[{"[", "i", "]"}], "]"}], ",", 
+       RowBox[{"{", 
+        RowBox[{"t", ",", "2"}], "}"}]}], "]"}], "==", 
+     RowBox[{
+      RowBox[{
+       RowBox[{"(", 
+        RowBox[{"ODEmatrix", ".", "Statevec"}], ")"}], "[", 
+       RowBox[{"[", "i", "]"}], "]"}], "+", 
+      RowBox[{"Avec", "[", 
+       RowBox[{"[", "i", "]"}], "]"}]}]}], "]"}]}], "\[IndentingNewLine]", 
+  "]"}]], "Input",
+ CellChangeTimes->{{3.873791491178652*^9, 3.873791580794591*^9}},
+ CellLabel->"In[15]:=",ExpressionUUID->"df426a9c-d9e8-4167-9439-81ebcca7a356"],
+
+Cell[BoxData[
+ RowBox[{"For", " ", "[", 
+  RowBox[{
+   RowBox[{"i", "=", "1"}], ",", 
+   RowBox[{"i", "<=", 
+    RowBox[{"Length", "[", "Statevec", "]"}]}], ",", 
+   RowBox[{"i", "+=", "1"}], ",", "\[IndentingNewLine]", 
+   RowBox[{"Print", "[", 
+    RowBox[{
+     RowBox[{"D", "[", 
+      RowBox[{
+       RowBox[{
+        RowBox[{"(", 
+         RowBox[{"Tmatrix", ".", "Statevec"}], ")"}], "[", 
+        RowBox[{"[", "i", "]"}], "]"}], ",", 
+       RowBox[{"{", 
+        RowBox[{"t", ",", "2"}], "}"}]}], "]"}], "==", 
+     RowBox[{
+      RowBox[{
+       RowBox[{"(", 
+        RowBox[{
+         RowBox[{"(", 
+          RowBox[{"Tmatrix", ".", "ODEmatrix", ".", "TmatrixInv"}], ")"}], 
+         ".", 
+         RowBox[{"(", 
+          RowBox[{"Tmatrix", ".", "Statevec"}], ")"}]}], ")"}], "[", 
+       RowBox[{"[", "i", "]"}], "]"}], "+", 
+      RowBox[{
+       RowBox[{"(", 
+        RowBox[{"Tmatrix", ".", "Avec"}], ")"}], "[", 
+       RowBox[{"[", "i", "]"}], "]"}]}]}], "]"}]}], "\[IndentingNewLine]", 
+  "]"}]], "Input",
+ CellChangeTimes->{{3.8737915968169737`*^9, 3.873791679970355*^9}, {
+   3.8737920095553074`*^9, 3.873792055469387*^9}, 3.885141687458054*^9},
+ CellLabel->"In[16]:=",ExpressionUUID->"32c2e99b-7281-486e-a025-6cc19812c142"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["\<\
+While the second form is clearly simpler due to its decoupling of equations, \
+we will follow from the notes with yi\[CloseCurlyQuote]\[CloseCurlyQuote] = \
+\[Lambda]i yi + bi (this is equivalent to what is written above)\
+\>", "Subsection",
+ CellChangeTimes->{{3.8737918649331703`*^9, 3.873791879845792*^9}, {
+  3.873792086978309*^9, 3.8737921464198527`*^9}, {3.885299921838381*^9, 
+  3.885299922626062*^9}},ExpressionUUID->"4770a781-c308-4aba-b81e-\
+eed224b162ba"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"Bvec", "=", 
+   RowBox[{"Tmatrix", ".", "Avec"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{"Bvec", "//", "MatrixForm"}]}], "Input",
+ CellChangeTimes->{{3.873792212284788*^9, 3.87379221951587*^9}, {
+  3.873792303306349*^9, 3.87379230923688*^9}},
+ CellLabel->"In[17]:=",ExpressionUUID->"d0304f75-b54e-4746-9693-058991ef3f93"],
+
+Cell[BoxData[
+ TagBox[
+  RowBox[{"(", "\[NoBreak]", 
+   TagBox[GridBox[{
+      {"0"},
+      {
+       FractionBox[
+        RowBox[{"a", " ", "k"}], "m"]},
+      {"0"}
+     },
+     GridBoxAlignment->{"Columns" -> {{Center}}, "Rows" -> {{Baseline}}},
+     GridBoxSpacings->{"Columns" -> {
+         Offset[0.27999999999999997`], {
+          Offset[0.5599999999999999]}, 
+         Offset[0.27999999999999997`]}, "Rows" -> {
+         Offset[0.2], {
+          Offset[0.4]}, 
+         Offset[0.2]}}],
+    Column], "\[NoBreak]", ")"}],
+  Function[BoxForm`e$, 
+   MatrixForm[BoxForm`e$]]]], "Output",
+ CellChangeTimes->{3.873792219873334*^9, 3.873792309572796*^9, 
+  3.8737925462595*^9, 3.874220694945994*^9, 3.8851417079471083`*^9, 
+  3.8852994769074783`*^9, 3.885299815642041*^9, 3.88529988572155*^9},
+ CellLabel->
+  "Out[18]//MatrixForm=",ExpressionUUID->"1511a8d0-ca3a-4c81-9d68-\
+e9df1613c7b7"]
+}, Open  ]],
+
+Cell[BoxData[
+ RowBox[{"Print", "[", 
+  RowBox[{"DSolve", "[", 
+   RowBox[{
+    RowBox[{
+     RowBox[{
+      RowBox[{"y1", "''"}], "[", "t", "]"}], "==", 
+     RowBox[{
+      RowBox[{
+       RowBox[{
+        RowBox[{"Eigsys", "[", 
+         RowBox[{"[", "1", "]"}], "]"}], "[", 
+        RowBox[{"[", "1", "]"}], "]"}], 
+       RowBox[{"y1", "[", "t", "]"}]}], "+", 
+      RowBox[{"Bvec", "[", 
+       RowBox[{"[", "1", "]"}], "]"}]}]}], ",", 
+    RowBox[{"y1", "[", "t", "]"}], ",", "t"}], "]"}], "]"}]], "Input",
+ CellChangeTimes->{{3.8737921515512247`*^9, 3.8737922578911843`*^9}, {
+  3.885141815684898*^9, 3.88514185049806*^9}, {3.885142682682611*^9, 
+  3.885142710294791*^9}, {3.885142771988853*^9, 3.885142772122423*^9}, {
+  3.8852997206025953`*^9, 3.885299750333267*^9}},
+ CellLabel->"In[19]:=",ExpressionUUID->"ef354a53-a5f4-428d-8c12-26637cf2b89c"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Now solve the other equations", "Subsection",
+ CellChangeTimes->{{3.873792337131994*^9, 3.873792340294256*^9}, {
+   3.8742208285105314`*^9, 3.8742208325425425`*^9}, 3.8769011389793415`*^9, 
+   3.8852997072909403`*^9},ExpressionUUID->"50c15f7e-c903-4116-b893-\
+8e72bf6bbbc9"],
+
+Cell[BoxData[
+ RowBox[{"For", " ", "[", 
+  RowBox[{
+   RowBox[{"i", "=", "1"}], ",", 
+   RowBox[{"i", "<=", 
+    RowBox[{"Length", "[", "Statevec", "]"}]}], ",", 
+   RowBox[{"i", "+=", "1"}], ",", "\[IndentingNewLine]", 
+   RowBox[{"Print", "[", 
+    RowBox[{
+     RowBox[{"DSolve", "[", 
+      RowBox[{
+       RowBox[{
+        RowBox[{
+         RowBox[{"y", "''"}], "[", "t", "]"}], "==", 
+        RowBox[{
+         RowBox[{
+          RowBox[{
+           RowBox[{"Eigsys", "[", 
+            RowBox[{"[", "1", "]"}], "]"}], "[", 
+           RowBox[{"[", "i", "]"}], "]"}], 
+          RowBox[{"y", "[", "t", "]"}]}], "+", 
+         RowBox[{"Bvec", "[", 
+          RowBox[{"[", "i", "]"}], "]"}]}]}], ",", 
+       RowBox[{"y", "[", "t", "]"}], ",", "t"}], "]"}], "/.", 
+     RowBox[{"y", "\[Rule]", 
+      RowBox[{"ToExpression", "[", 
+       RowBox[{"\"\<y\>\"", "<>", 
+        RowBox[{"ToString", "[", "i", "]"}]}], "]"}]}]}], "]"}]}], 
+  "\[IndentingNewLine]", "]"}]], "Input",
+ CellChangeTimes->{{3.885141744631041*^9, 3.885141754672186*^9}, 
+   3.8852997126611137`*^9},
+ CellLabel->"In[20]:=",ExpressionUUID->"6b4d077f-0e33-4f81-a2b8-3eb5a9530db0"]
+}, Open  ]],
+
+Cell["\<\
+Relate the qualitative understanding of eigenvectors to the results here.\
+\>", "Subsection",
+ CellChangeTimes->{{3.8737924539390073`*^9, 
+  3.8737924692526026`*^9}},ExpressionUUID->"09f6b3bd-08f6-4de6-8b62-\
+b86ce57a9f16"]
+},
+WindowSize->{1680, 960},
+WindowMargins->{{0, Automatic}, {Automatic, 550}},
+Magnification:>1.7 Inherited,
+FrontEndVersion->"12.0 for Mac OS X x86 (64-bit) (April 8, 2019)",
+StyleDefinitions->"Default.nb"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[CellGroupData[{
+Cell[580, 22, 267, 6, 92, "Subsection",ExpressionUUID->"e237f15c-c56f-4af0-bfb2-082eb2ad2a57"],
+Cell[CellGroupData[{
+Cell[872, 32, 1335, 41, 217, "Input",ExpressionUUID->"c58f83d5-473a-4d57-ba36-4958d614efe9"],
+Cell[2210, 75, 1122, 34, 168, "Output",ExpressionUUID->"f38acdff-b80f-4548-85ae-228df560364d"]
+}, Open  ]]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[3381, 115, 304, 6, 138, "Subsection",ExpressionUUID->"1c450b6f-2382-419f-a49a-8c2d5276b75a"],
+Cell[CellGroupData[{
+Cell[3710, 125, 297, 5, 51, "Input",ExpressionUUID->"4c65e35a-7cd0-4532-ab97-791d16da99b7"],
+Cell[4010, 132, 862, 24, 77, "Output",ExpressionUUID->"182126c7-fe77-4836-9847-f4dac9ba01cc"]
+}, Open  ]]
+}, Open  ]],
+Cell[4899, 160, 366, 7, 138, "Subsection",ExpressionUUID->"78cd5db0-83db-4dc2-aa31-6848dd0e2e85"],
+Cell[CellGroupData[{
+Cell[5290, 171, 485, 11, 108, "Subsection",ExpressionUUID->"9505c853-0629-4dcf-9b88-0bb9a90358bb"],
+Cell[5778, 184, 940, 20, 192, "Input",ExpressionUUID->"f292f453-af85-4c4a-800d-c7d9e8147eb7"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[6755, 209, 694, 15, 230, "Subsection",ExpressionUUID->"cf3d0237-0d43-441c-891f-91bba9ab2ef4"],
+Cell[7452, 226, 268, 4, 51, "Input",ExpressionUUID->"22762b43-f21a-4905-ad96-a70b547f5183"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[7757, 235, 751, 15, 254, "Subsection",ExpressionUUID->"35e20cdf-525c-41a7-b019-335c8870017f"],
+Cell[8511, 252, 300, 4, 51, "Input",ExpressionUUID->"7c5b5eb0-4275-40db-a282-366587f6be52"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[8848, 261, 402, 8, 138, "Subsection",ExpressionUUID->"d25b8104-8af6-41c8-ac20-fa8da6683e5b"],
+Cell[9253, 271, 884, 24, 122, "Input",ExpressionUUID->"df426a9c-d9e8-4167-9439-81ebcca7a356"],
+Cell[10140, 297, 1245, 34, 157, "Input",ExpressionUUID->"32c2e99b-7281-486e-a025-6cc19812c142"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[11422, 336, 476, 8, 138, "Subsection",ExpressionUUID->"4770a781-c308-4aba-b81e-eed224b162ba"],
+Cell[CellGroupData[{
+Cell[11923, 348, 360, 7, 87, "Input",ExpressionUUID->"d0304f75-b54e-4746-9693-058991ef3f93"],
+Cell[12286, 357, 889, 26, 144, "Output",ExpressionUUID->"1511a8d0-ca3a-4c81-9d68-e9df1613c7b7"]
+}, Open  ]],
+Cell[13190, 386, 856, 21, 51, "Input",ExpressionUUID->"ef354a53-a5f4-428d-8c12-26637cf2b89c"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[14083, 412, 280, 4, 92, "Subsection",ExpressionUUID->"50c15f7e-c903-4116-b893-8e72bf6bbbc9"],
+Cell[14366, 418, 1151, 31, 122, "Input",ExpressionUUID->"6b4d077f-0e33-4f81-a2b8-3eb5a9530db0"]
+}, Open  ]],
+Cell[15532, 452, 233, 5, 92, "Subsection",ExpressionUUID->"09f6b3bd-08f6-4de6-8b62-b86ce57a9f16"]
+}
+]
+*)
+
