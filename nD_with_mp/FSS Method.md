@@ -8,7 +8,7 @@ $$\
 M_L(T) \approx L^{-\beta/\nu}\ \tilde{M}\!\Bigl((T - T_c)\ L^{1/\nu}\Bigr)
 \$$
 
-   where $\(\nu\)$ is another critical exponent (for the correlation length). $\(\tilde{M}\)$ is a universal scaling function.
+   where $$\nu\$$ is another critical exponent (for the correlation length). $\(\tilde{M}\)$ is a universal scaling function.
 
 4. **Data Collapse:** You then attempt to “collapse” all your $\(M_L(T)\)$ data onto a **single** universal curve by plotting
 
