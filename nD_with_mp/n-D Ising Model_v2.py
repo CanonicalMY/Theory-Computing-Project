@@ -351,35 +351,31 @@ if __name__ == '__main__':
     # Estimate heat capacity C = dE/dT (using finite differences)
     heat_capacity = np.gradient(energies, temps)
 
-    # Create a figure with twin axes for Energy and Heat Capacity
-    fig, ax1 = plt.subplots()
-
-    # Plot Energy vs Temperature on ax1
-    ax1.scatter(temps, energies, 'o-', color='blue', label='Energy')
-    ax1.set_xlabel("Temperature (T)")
-    ax1.set_ylabel("Energy (E)", color='blue')
-    ax1.tick_params(axis='y', labelcolor='blue')
-
-    # Create a twin axis sharing the same x-axis for heat capacity
-    ax2 = ax1.twinx()
-    ax2.scatter(temps, heat_capacity, 'o-', color='red', label='Heat Capacity')
-    ax2.set_ylabel("Heat Capacity (C)", color='red')
-    ax2.tick_params(axis='y', labelcolor='red')
-
-    # Add a title and layout adjustments
-    plt.title("Energy and Heat Capacity vs Temperature")
-    fig.tight_layout()
-    plt.savefig(f"Ising_{dimension}D_E_and_C_vs_T.jpg")
-    plt.show()
-
-    # Plot and save the M vs Temperature separately
+    # Plot Average Magnetization vs Temperature
+    plt.figure()
     plt.scatter(temps, mags)
     plt.xlabel("Temperature (T)")
     plt.ylabel("Average Magnetization (M)")
     plt.title(f"{dimension}D Ising Model (Lattice size = {lattice_size})")
-    filename = f"Ising_{dimension}D_with_mp.jpg"
-    plt.savefig(filename)
-    print(f"Figure saved as {filename}")
+    plt.savefig(f"Ising_{dimension}D_M_vs_T.jpg")
+    plt.show()
+
+    # Plot Average Energy vs Temperature
+    plt.figure()
+    plt.scatter(temps, energies)
+    plt.xlabel("Temperature (T)")
+    plt.ylabel("Average Energy (E)")
+    plt.title("Energy vs Temperature")
+    plt.savefig(f"Ising_{dimension}D_E_vs_T.jpg")
+    plt.show()
+
+    # Plot Heat Capacity vs Temperature
+    plt.figure()
+    plt.scatter(temps, heat_capacity)
+    plt.xlabel("Temperature (T)")
+    plt.ylabel("Heat Capacity (C)")
+    plt.title("Heat Capacity vs Temperature")
+    plt.savefig(f"Ising_{dimension}D_C_vs_T.jpg")
     plt.show()
 
     # Magnetization vs External Field B (Separate Run)
@@ -533,3 +529,4 @@ if __name__ == '__main__':
             print("Fitted exponents:", valid_exponents)
 
 # For a 4*4 random int 1000 MC and 500 runs from 0 to 4 in 200 with 1 and 1 JB, approx. time is 50:56
+# For a 4*4 random int 10000 MC and 100 runs from 0 to 5 in 100 with 1 and 1 JB, approx. time is 47:23
