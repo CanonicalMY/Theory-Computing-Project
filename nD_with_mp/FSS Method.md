@@ -5,7 +5,7 @@ The rigorous way to find critical exponents is through finite‐size scaling (FS
 3. **Apply a Scaling Form:** Theoretical finite‐size scaling predicts that near $\(T_c\)$:
 
 $$\
-M_L(T) \approx L^{-\beta/\nu}\,\tilde{M}\!\Bigl((T - T_c)\,L^{1/\nu}\Bigr),
+M_L(T) \approx L^{-\beta/\nu}\ \tilde{M}\!\Bigl((T - T_c)\ L^{1/\nu}\Bigr)
 \$$
 
    where \(\nu\) is another critical exponent (for the correlation length). \(\tilde{M}\) is a universal scaling function.
