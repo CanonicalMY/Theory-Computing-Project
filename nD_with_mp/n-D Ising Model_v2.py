@@ -378,7 +378,10 @@ if __name__ == '__main__':
     plt.savefig(f"Ising_{dimension}D_C_vs_T.jpg")
     plt.show()
 
-    # Magnetization vs External Field B (Separate Run)
+    # Magnetization vs External Field B, Hysteresis Loop (Optional Run)
+    # Below the Tc, the system is in a magnetically ordered (ferromagnetic) phase. 
+    # As sweeping B from negative to positive and back, the magnetization lags behind, 
+    # producing a large, characteristic hysteresis loop.
     do_hysteresis = input(
         "Do you want to run the M vs B graph? (Enter 1 for yes, any other number to skip this part): ")
     if do_hysteresis.strip() == "1":
