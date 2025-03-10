@@ -16,8 +16,8 @@ $$\
 \bigl[\,M_L(T)\,L^{\beta/\nu}\bigr]\quad\text{vs.}\quad \bigl[(T - T_c)\,L^{1/\nu}\bigr]
 \$$
 
-   and adjusting \(\beta\), \(\nu\), and \(T_c\) until the curves for all lattice sizes overlap as much as possible. This is often done via numerical methods (e.g., a search algorithm or systematic scanning).
+   and adjusting $\beta$, $\nu$, and $T_c$ until the curves for all lattice sizes overlap as much as possible. This is often done via numerical methods (e.g., a search algorithm or systematic scanning).
 
 5. **Extract the Exponents:**  
    - Once you achieve a good collapse, the values of \(\beta\), \(\nu\), and \(T_c\) used in the collapse are your **finite‐size scaling estimates** of the true critical exponents and critical temperature.  
-   - As \(L\) grows, you get closer to the thermodynamic limit. Typically, your estimates converge to the known exact values (\(\beta=1/8\), \(\nu=1\) for 2D Ising).
+   - As $L$ grows, you get closer to the thermodynamic limit. Typically, your estimates converge to the known exact values $\beta=1/8$, \($\nu=1$\) for 2D Ising).
