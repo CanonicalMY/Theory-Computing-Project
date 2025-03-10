@@ -1,6 +1,6 @@
 The rigorous way to find critical exponents is through finite‐size scaling (FSS). The idea is:
 
-1. **Simulate Many Lattice Sizes:** \(L = 8, 16, 32, 64, \dots\)  
+1. **Simulate Many Lattice Sizes:** \(L = 8, 16, 32, 64, $\dots\$)  
 2. **Measure Magnetization Near \(T_c\):** For each \(L\), collect data \(M_L(T)\) for a range of temperatures around the expected critical temperature.  
 3. **Apply a Scaling Form:** Theoretical finite‐size scaling predicts that near \(T_c\):
 
