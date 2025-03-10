@@ -383,7 +383,7 @@ if __name__ == '__main__':
         "Do you want to run the M vs B graph? (Enter 1 for yes, any other number to skip this part): ")
     if do_hysteresis.strip() == "1":
         try:
-            T_fixed = float(input("Enter the fixed temperature for hysteresis simulation (e.g., 1.0): "))
+            T_fixed = float(input("Enter the fixed temperature (below T_c) (e.g., 1.0): "))
             B_max = float(input("Enter the maximum absolute value of the external field B (e.g., 2.0): "))
             num_B = int(input("Enter the number of B points for the sweep (e.g., 50): "))
         except Exception as e:
