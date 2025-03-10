@@ -10,4 +10,4 @@ Here you'll find our project code, documentation, and regular updates on our pro
 2025.3.9 updates:
 *Upload the n-d Ising Model_v2.py that can now plot E vs T, C vs T, M vs B thus the hysteresis loop. The additional cell on Finite-Size Analysis of Exponentials is now added. All with interactive user entrying.
 
-2025.3.10 updates: Upload the n-d Ising Model_v2.1.py that modifies the Finite-Size Analysis with the old exponential function fit to a more reasonable power law fit.
+2025.3.10 updates: Upload the n-d Ising Model_v2.1.py that modifies the Finite-Size Analysis with the old exponential function fit to a more reasonable power law fit, ie the Finite‐Size Scaling (FSS).
