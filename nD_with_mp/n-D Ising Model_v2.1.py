@@ -618,3 +618,4 @@ if __name__ == '__main__':
 # For a 4*4 random int 10000 MC and 100 runs from 0 to 5 in 100 with 1 and 1 JB, approx. time is 47:23
 # For a 4*4 non-random int 100 MC and 100 runs from 0 to 10 in 100 with 1 and 0 JB, approx. time is 2:00
 # For a 10*10 non-random int 100 MC and 100 runs from 0 to 10 in 100 with 1 and 0 JB, approx. time is 3:00
+# For a 16*16 non-random int 100 MC and 100 runs from 0 to 6 in 100 with 1 and 0 JB, approx. time is 6:00
