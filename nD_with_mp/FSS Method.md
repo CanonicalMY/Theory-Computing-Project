@@ -12,9 +12,9 @@ M_L(T) \approx L^{-\beta/\nu}\ \tilde{M}\!\Bigl((T - T_c)\ L^{1/\nu}\Bigr)
 
 4. **Data Collapse:** Then attempt to “collapse” all the $M_L(T)$ data onto a **single** universal curve by plotting
 
-\[
+$$
 \left[ M_L(T) L^{\beta/\nu} \right] \quad \text{vs.} \quad \left[ (T - T_c) L^{1/\nu} \right]
-\]
+$$
 
    and adjusting $\beta$, $\nu$, and $T_c$ until the curves for all lattice sizes overlap as much as possible. This is often done via numerical methods (e.g., a search algorithm or systematic scanning).
 
