@@ -29,7 +29,7 @@ The **cost function** is a quantitative measure used to assess how well the data
 1. **Data Scaling**  
    For each lattice size \(L\) and temperature \(T\) with corresponding magnetization \(M\), we apply the following transformations:
    - $\(x = (T - T_c) \times L^{1/\nu}\)$
-   - $\(y = M \times L^{\beta/\nu}\)$
+   - $\(y = M \times L^{\beta/\nu}\)$  
    The idea is that if the chosen parameters \(T_c\), \(\beta\), and \(\nu\) are correct, all the scaled data points \((x, y)\) from different \(L\) values should collapse onto a single universal curve.
 
 2. **Measuring the Spread (Local Variance)**  
