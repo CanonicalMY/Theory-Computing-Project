@@ -357,7 +357,7 @@ if __name__ == '__main__':
     plt.xlabel("Temperature (T)")
     plt.ylabel("Average Magnetization (M)")
     plt.title(f"{dimension}D Ising Model (Lattice size = {lattice_size})")
-    plt.savefig(f"Ising_{dimension}D_M_vs_T.jpg")
+    plt.savefig(f"output/Ising_{dimension}D_M_vs_T.jpg")
     plt.show()
 
     # Plot Average Energy vs Temperature
@@ -366,7 +366,7 @@ if __name__ == '__main__':
     plt.xlabel("Temperature (T)")
     plt.ylabel("Average Energy (E)")
     plt.title("Energy vs Temperature")
-    plt.savefig(f"Ising_{dimension}D_E_vs_T.jpg")
+    plt.savefig(f"output/Ising_{dimension}D_E_vs_T.jpg")
     plt.show()
 
     # Plot Heat Capacity vs Temperature
@@ -375,7 +375,7 @@ if __name__ == '__main__':
     plt.xlabel("Temperature (T)")
     plt.ylabel("Heat Capacity (C)")
     plt.title("Heat Capacity vs Temperature")
-    plt.savefig(f"Ising_{dimension}D_C_vs_T.jpg")
+    plt.savefig(f"output/Ising_{dimension}D_C_vs_T.jpg")
     plt.show()
 
     # Magnetization vs External Field B, Hysteresis Loop (Optional Run)
