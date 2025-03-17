@@ -565,8 +565,8 @@ if __name__ == '__main__':
             beta_max = float(input("Enter maximum beta guess (default 0.275): "))
             beta_points = int(input("Enter number of beta points (default 50): "))
             nu_min = float(input("Enter minimum nu guess (default 0.5): "))
-            nu_max = float(input("Enter maximum nu guess (default 2): "))
-            nu_points = int(input("Enter number of nu points (default 10): "))
+            nu_max = float(input("Enter maximum nu guess (default 1.5): "))
+            nu_points = int(input("Enter number of nu points (default 50): "))
 
             T_c_range = np.linspace(T_c_min, T_c_max, T_c_points)
             beta_range = np.linspace(beta_min, beta_max, beta_points)
