@@ -558,12 +558,12 @@ if __name__ == '__main__':
         grid_choice = input(
             "Do you want to enter custom grid search parameters? (Enter 1 for yes, any other key for default): ")
         if grid_choice.strip() == "1":
-            T_c_min = float(input("Enter minimum T_c guess (default last T_min): "))
-            T_c_max = float(input("Enter maximum T_c guess (default last T_max): "))
-            T_c_points = int(input("Enter number of T_c points (default 20): "))
-            beta_min = float(input("Enter minimum beta guess (default 0.05): "))
-            beta_max = float(input("Enter maximum beta guess (default 0.5): "))
-            beta_points = int(input("Enter number of beta points (default 10): "))
+            T_c_min = float(input("Enter minimum T_c guess (default 2): "))
+            T_c_max = float(input("Enter maximum T_c guess (default 3): "))
+            T_c_points = int(input("Enter number of T_c points (default 100): "))
+            beta_min = float(input("Enter minimum beta guess (default 0.075): "))
+            beta_max = float(input("Enter maximum beta guess (default 0.275): "))
+            beta_points = int(input("Enter number of beta points (default 50): "))
             nu_min = float(input("Enter minimum nu guess (default 0.5): "))
             nu_max = float(input("Enter maximum nu guess (default 2): "))
             nu_points = int(input("Enter number of nu points (default 10): "))
@@ -572,9 +572,9 @@ if __name__ == '__main__':
             beta_range = np.linspace(beta_min, beta_max, beta_points)
             nu_range = np.linspace(nu_min, nu_max, nu_points)
         else:
-            T_c_range = np.linspace(T_min, T_max, 20)  # e.g., 20 points
-            beta_range = np.linspace(0.05, 0.5, 10)  # guess range for beta
-            nu_range = np.linspace(0.5, 2.0, 10)  # guess range for nu
+            T_c_range = np.linspace(2, 3, 100)  # e.g., 100 points
+            beta_range = np.linspace(0.05, 0.275, 50)  # guess range for beta
+            nu_range = np.linspace(0.5, 1.5, 50)  # guess range for nu
 
         best_params = (None, None, None)
         best_cost = 1e9  # Return a high penalty value
