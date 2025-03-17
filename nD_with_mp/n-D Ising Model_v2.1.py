@@ -439,7 +439,7 @@ if __name__ == '__main__':
         plt.ylabel("Magnetization M")
         plt.title(f"Hysteresis Loop at T = {T_fixed}")
         plt.legend()
-        filename_hyst = f"Ising_{dimension}D_Hysteresis.jpg"
+        filename_hyst = f"output/Ising_{dimension}D_Hysteresis.jpg"
         plt.savefig(filename_hyst)
         plt.show()
 
@@ -611,7 +611,7 @@ if __name__ == '__main__':
         plt.ylabel("y = M * L^(beta/nu)")
         plt.title("Data Collapse for Finite-Size Scaling")
         plt.legend()
-        plt.savefig("FSS Data Collapse.jpg")
+        plt.savefig("output/FSS Data Collapse.jpg")
         plt.show()
 
 # For a 4*4 random int 1000 MC and 500 runs from 0 to 4 in 200 with 1 and 1 JB, approx. time is 50:56
