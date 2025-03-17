@@ -493,9 +493,7 @@ if __name__ == '__main__':
             data[L] = (temps_L, mags_L)
 
 
-        # ---------------------------------------------------------------------
         # 3) Define a "data collapse" cost function
-        # ---------------------------------------------------------------------
         def collapse_cost_weighted(params, data_dict, x0=1.0, nbins=20):
             """
             A weighted cost function where each point is weighted by exp(-(x/x0)^2).
