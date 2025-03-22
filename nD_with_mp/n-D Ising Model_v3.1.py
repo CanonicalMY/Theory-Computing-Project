@@ -320,16 +320,16 @@ def collapse_cost(params, data_dict):
 # ---------------------- User Entry (Default Parameters) ----------------------
 if __name__ == '__main__':
     ### CHANGE 1: Instead of interactive user input, we use default built-in parameters for testing.
-    dimension = 2
-    lattice_size = 32
-    random_init = True
-    steps_MC = 100
-    n_runs = 100
-    T_min = 0.0
-    T_max = 5.0
-    num_T = 25
-    J = 1.0
-    B = 0.0
+    dimension = 2  # default 2
+    lattice_size = 8  # default 8
+    random_init = False  # default False
+    steps_MC = 100  # default 100
+    n_runs = 100  # default 100
+    T_min = 0.0  # default 0
+    T_max = 5.0  # default 5
+    num_T = 25  # default 50
+    J = 1.0  # default 1
+    B = 0.0  # default 0
 
     # Generate temperature array:
     T_vals = np.linspace(T_min, T_max, num_T)
