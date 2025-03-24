@@ -139,7 +139,7 @@ if __name__ == "__main__":
     import matplotlib.pyplot as plt
 
     dimension = 2
-    lattice_size = 32
+    lattice_size = 8
     random_init = True
     steps_MC = 1000
     n_runs = 100
