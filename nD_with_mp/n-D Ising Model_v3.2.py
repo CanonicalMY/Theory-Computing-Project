@@ -371,7 +371,7 @@ if __name__ == '__main__':
     data = {}
 
     for L in lattice_sizes:
-        data_file = f"FSS_data_L{L}.npz"
+        data_file = f"output/FSS_data_L{L}.npz"
         if os.path.exists(data_file):
             print(f"Loading data for lattice size {L} from {data_file}...")
             loaded = np.load(data_file)
