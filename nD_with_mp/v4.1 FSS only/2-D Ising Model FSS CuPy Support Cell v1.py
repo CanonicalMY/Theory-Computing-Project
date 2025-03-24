@@ -141,8 +141,8 @@ if __name__ == "__main__":
     dimension = 2
     lattice_size = 8
     random_init = True
-    steps_MC = 1000
-    n_runs = 100
+    steps_MC = 100
+    n_runs = 10
     T_min = 1.8
     T_max = 2.8
     num_T = 50
