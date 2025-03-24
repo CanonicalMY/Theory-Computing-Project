@@ -109,9 +109,9 @@ def simulation_at_T_cupy_vectorized(T_value, lattice_size, steps_MC, n_runs, J, 
 if __name__ == "__main__":
     # Simulation parameters (for testing)
     lattice_size = 8
-    random_init = True
+    random_init = False
     steps_MC = 100        # You can increase this for better equilibration
-    n_runs = 10
+    n_runs = 100
     T_min = 1.8
     T_max = 2.8
     num_T = 50
