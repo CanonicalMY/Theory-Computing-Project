@@ -142,10 +142,10 @@ if __name__ == "__main__":
     lattice_size = 32
     random_init = True
     steps_MC = 1000
-    n_runs = 50
-    T_min = 1.5
-    T_max = 3.0
-    num_T = 30
+    n_runs = 100
+    T_min = 1.8
+    T_max = 2.8
+    num_T = 50
     J = 1.0
     B = 0.0
     periodic = True
@@ -167,7 +167,7 @@ if __name__ == "__main__":
     energies = results[:, 2]
 
     # Save data
-    out_file = f"Ising2D_GPU_L{lattice_size}.npz"
+    out_file = f"output/Ising2D_GPU_L{lattice_size}.npz"
     np.savez(out_file, temps=temps, mags=mags, energies=energies)
     print(f"Simulation data saved to {out_file}")
 
