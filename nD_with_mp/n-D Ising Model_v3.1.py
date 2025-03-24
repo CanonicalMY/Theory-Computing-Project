@@ -224,11 +224,13 @@ def simulation_at_T_generic(T_value, dimension, lattice_size, steps_MC, n_runs, 
 def collapse_cost_weighted(params, data_dict, x0=1.0, nbins=20):
     """
     A weighted cost function where each point is weighted by exp(-(x/x0)^2).
+
     Parameters:
       params   : tuple (T_c, beta, nu)
       data_dict: dictionary {L: (temps_L, mags_L)}
       x0       : scaling parameter controlling the decay of the weight (default 1.0)
       nbins    : number of bins to group the scaled x values (default 20)
+
     Returns:
       cost value: lower cost means better collapse.
     """
@@ -266,6 +268,9 @@ def collapse_cost_weighted(params, data_dict, x0=1.0, nbins=20):
         if np.sum(mask) > 1:
             y_bin = y_sorted[mask]
             w_bin = weights_sorted[mask]
+            # NEW: Skip bin if the sum of weights is zero to avoid division by zero
+            if np.sum(w_bin) == 0:
+                continue
             y_mean = np.average(y_bin, weights=w_bin)
             sum_sq += np.sum(w_bin * (y_bin - y_mean) ** 2)
             weight_sum += np.sum(w_bin)
@@ -276,7 +281,7 @@ def collapse_cost_weighted(params, data_dict, x0=1.0, nbins=20):
         return 1e9
 
 
-# Original cost function remains available (if needed for comparison)
+# Original cost function remains available (for comparison)
 def collapse_cost(params, data_dict):
     T_c, beta, nu = params
     x_all = []
