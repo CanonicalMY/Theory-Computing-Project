@@ -1,8 +1,6 @@
 """
-CuPy support cell for FSS with vectorized energy calculation and Checkerboard updates
-=====================================
-GPU-accelerated 2D Ising simulation using CuPy with vectorized (checkerboard) updates.
-Saves results to .npz files for later FSS analysis.
+CuPy-based 2D Ising with Vectorized Checkerboard Updates (Improved)
+===================================================================
 """
 
 import cupy as cp
@@ -14,75 +12,92 @@ import matplotlib.pyplot as plt
 # Ensure output directory exists
 os.makedirs("output", exist_ok=True)
 
-# ---------------------- 2D Ising GPU Functions (Vectorized) ----------------------
-
 def initial_config_cupy(random_init, lattice_size):
     """
     Allocate a 2D spin lattice on the GPU using CuPy arrays.
-    If random_init=True, spins are +1/-1 at random; otherwise, all spins = +1.
+    Store spins in float32 to avoid potential int overflow or underflow.
     """
     if random_init:
-        spin = cp.random.randint(2, size=(lattice_size, lattice_size))
-        spin = 2 * spin - 1  # Map {0,1} -> {-1,+1}
+        # Generate random 0 or 1 in int8, then map to {-1, +1} in float32
+        spin_int = cp.random.randint(0, 2, size=(lattice_size, lattice_size), dtype=cp.int8)
+        spin = spin_int.astype(cp.float32)
+        spin = 2 * spin - 1  # Now in {-1, +1} as float32
     else:
-        spin = cp.ones((lattice_size, lattice_size), dtype=cp.int8)
+        # All spins = +1.0 (float32)
+        spin = cp.ones((lattice_size, lattice_size), dtype=cp.float32)
     return spin
+
 
 def energy_2D_cupy_vectorized(spin, J, B, periodic=True):
     """
-    Compute the total energy for a 2D lattice using vectorized operations.
-    Uses cp.roll to shift the lattice and sum contributions from right and down neighbors.
+    Compute total energy using cp.roll for periodic boundary conditions.
+    spin is float32 in [-1, +1].
     """
     if periodic:
         right = cp.roll(spin, shift=-1, axis=1)
         down = cp.roll(spin, shift=-1, axis=0)
     else:
-        # Non-periodic version (not optimized)
+        # Non-periodic: just zero out the 'beyond' edges (not optimized)
+        N = spin.shape[0]
         right = cp.zeros_like(spin)
         right[:, :-1] = spin[:, 1:]
         down = cp.zeros_like(spin)
         down[:-1, :] = spin[1:, :]
-    energy = -J * cp.sum(spin * (right + down)) - B * cp.sum(spin)
-    return energy
+
+    # Sum neighbor contributions and subtract B field
+    # Each bond is only counted once (right + down)
+    E = -J * cp.sum(spin * (right + down)) - B * cp.sum(spin)
+    return E
+
 
 def checkerboard_update(spin, T, J, B, periodic, parity):
     """
-    Perform a vectorized update on one sublattice (checkerboard update).
-    'parity' is 0 for black sites and 1 for white sites.
+    Vectorized checkerboard update for one sublattice (parity=0 or 1).
+    spin is float32 in [-1, +1].
     """
     N = spin.shape[0]
-    # Create a mask for checkerboard sites where (i+j)%2 == parity
+    # Checkerboard mask: sublattice (i + j) % 2 == parity
     i_indices = cp.arange(N).reshape(N, 1)
     j_indices = cp.arange(N).reshape(1, N)
     mask = ((i_indices + j_indices) % 2) == parity
 
-    # Compute neighbor sum using periodic boundaries via cp.roll
-    neighbor_sum = (cp.roll(spin, shift=1, axis=0) + cp.roll(spin, shift=-1, axis=0) +
-                    cp.roll(spin, shift=1, axis=1) + cp.roll(spin, shift=-1, axis=1))
-    # Energy difference if the spin is flipped: ΔE = 2 * spin * (J * neighbor_sum + B)
-    deltaE = 2 * spin * (J * neighbor_sum + B)
-    # Generate a random matrix for all sites
-    random_matrix = cp.random.rand(N, N)
-    # Acceptance: flip if ΔE <= 0 or with probability exp(-ΔE/T)
-    acceptance = (deltaE <= 0) | (random_matrix < cp.exp(-deltaE / T))
-    # Only update sites in the checkerboard mask
-    flip_mask = mask & acceptance
+    # Compute neighbor sum for each site
+    top    = cp.roll(spin,  1, axis=0)
+    bottom = cp.roll(spin, -1, axis=0)
+    left   = cp.roll(spin,  1, axis=1)
+    right  = cp.roll(spin, -1, axis=1)
+    neighbor_sum = top + bottom + left + right
+
+    # Delta E = E_new - E_old = 2 * spin * (J * neighbor_sum + B)
+    deltaE = 2.0 * spin * (J * neighbor_sum + B)
+
+    # Generate random matrix for acceptance
+    rnd = cp.random.rand(N, N)
+    # Accept flip if deltaE <= 0 or rnd < exp(-deltaE / T)
+    accept = (deltaE <= 0) | (rnd < cp.exp(-deltaE / T))
+
+    # Only flip spins in the chosen sublattice
+    flip_mask = mask & accept
     spin[flip_mask] = -spin[flip_mask]
+
 
 def step_2D_cupy_vectorized(spin, steps_MC, T, J, B, periodic=True):
     """
-    Perform 'steps_MC' Monte Carlo sweeps using vectorized checkerboard updates.
-    Each sweep updates the black sublattice and then the white sublattice.
+    Perform steps_MC Monte Carlo sweeps using checkerboard updates.
+    Each sweep updates sublattice=0, then sublattice=1.
     """
     for _ in range(steps_MC):
         checkerboard_update(spin, T, J, B, periodic, parity=0)
         checkerboard_update(spin, T, J, B, periodic, parity=1)
 
+
 def M_2D_cupy(spin):
     """
-    Compute absolute magnetization = |sum of spins| / (N*N).
+    Compute the absolute magnetization = |sum of spins| / (N*N).
+    spin is float32 in [-1, +1].
     """
     return cp.abs(spin).sum() / spin.size
+
 
 def simulation_at_T_cupy_vectorized(T_value, lattice_size, steps_MC, n_runs, J, B,
                                     periodic=True, random_init=True):
@@ -94,7 +109,7 @@ def simulation_at_T_cupy_vectorized(T_value, lattice_size, steps_MC, n_runs, J, 
     E_sum = 0.0
     for _ in range(n_runs):
         spin = initial_config_cupy(random_init, lattice_size)
-        # Use the vectorized Monte Carlo sweeps (checkerboard update)
+        # Perform Monte Carlo sweeps
         step_2D_cupy_vectorized(spin, steps_MC, T_value, J, B, periodic)
         m = M_2D_cupy(spin)
         e = energy_2D_cupy_vectorized(spin, J, B, periodic)
@@ -105,13 +120,13 @@ def simulation_at_T_cupy_vectorized(T_value, lattice_size, steps_MC, n_runs, J, 
     E_avg = E_sum / n_runs
     return T_value, M_avg, E_avg
 
-# ---------------------- Main: GPU Simulation & Save ----------------------
+
 if __name__ == "__main__":
-    # Simulation parameters (for testing)
+    # Simulation parameters
     lattice_size = 8
-    random_init = False
-    steps_MC = 100        # You can increase this for better equilibration
-    n_runs = 100
+    random_init = True
+    steps_MC = 1000     # Increased for better equilibration
+    n_runs = 10
     T_min = 1.8
     T_max = 2.8
     num_T = 50
@@ -119,24 +134,29 @@ if __name__ == "__main__":
     B = 0.0
     periodic = True
 
-    # Prepare temperature array
+    # Temperature array
     T_vals = np.linspace(T_min, T_max, num_T)
 
+    # Run the simulation
+    print(f"Running 2D Ising (GPU, vectorized) L={lattice_size}, steps_MC={steps_MC}, n_runs={n_runs} ...")
     results = []
-    print(f"Running 2D Ising on GPU (vectorized) with L={lattice_size}, steps_MC={steps_MC}, n_runs={n_runs} ...")
     for T in tqdm(T_vals):
-        res = simulation_at_T_cupy_vectorized(T, lattice_size, steps_MC, n_runs, J, B, periodic, random_init)
-        results.append(res)
+        tval, mag, ener = simulation_at_T_cupy_vectorized(
+            T, lattice_size, steps_MC, n_runs, J, B, periodic, random_init
+        )
+        results.append((tval, mag, ener))
 
     results = np.array(results)
     temps = results[:, 0]
     mags = results[:, 1]
     energies = results[:, 2]
 
+    # Save results
     out_file = f"output/Ising2D_GPU_vectorized_L{lattice_size}.npz"
     np.savez(out_file, temps=temps, mags=mags, energies=energies)
     print(f"Simulation data saved to {out_file}")
 
+    # Plot
     heat_capacity = np.gradient(energies, temps)
 
     plt.figure()
