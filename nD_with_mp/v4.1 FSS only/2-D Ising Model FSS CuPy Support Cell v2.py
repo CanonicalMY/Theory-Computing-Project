@@ -122,10 +122,10 @@ def simulation_at_T_cupy_vectorized(T_value, lattice_size, steps_MC, n_runs, J, 
 
 if __name__ == "__main__":
     # Simulation parameters
-    lattice_size = 128  # Increase as needed
+    lattice_size = 256  # Increase as needed
     random_init = True
     steps_MC = 1000  # Number of MC sweeps; adjust for equilibration
-    n_runs = 50  # Number of independent runs for averaging
+    n_runs = 100  # Number of independent runs for averaging
     T_min = 1.8  # Temperature range (choose appropriately)
     T_max = 2.8
     num_T = 50
