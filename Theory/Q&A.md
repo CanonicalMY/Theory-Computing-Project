@@ -1,5 +1,6 @@
-At random_init = True, MC_steps = 1000, n_runs = 100, T from 1.8 to 2.8 in 50 points, for L = 64，128，256的三组数据，为什么随着L增加 phase transition反而不明显(not sharp)了呢？
+**At random_init = True, MC_steps = 1000, n_runs = 100, T from 1.8 to 2.8 in 50 points, for L = 64，128，256的三组数据，为什么随着L增加 phase transition反而不明显(not sharp)了呢？**
 
+---
 
 From the plots, it looks like **for larger lattice sizes (L=128, 256), the magnetization at low temperatures is no longer close to 1.0**, making the phase transition appear “less sharp.” In principle, **for the 2D Ising model**, we expect that *larger* \( L \) yields a *sharper* transition near \( T_c \approx 2.27 \). The fact that you see the opposite (lower magnetization for \( T < T_c \) as \( L \) grows) typically indicates **incomplete equilibration** of the larger systems at low temperatures.
 
