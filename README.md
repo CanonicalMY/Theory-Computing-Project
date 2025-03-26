@@ -2,7 +2,7 @@ Welcome to the personal repository for the UoM 2nd Year Physics with Theo. Phys.
 
 Here you'll find our project code, documentation, and regular updates on our progress. I will be detailing our methodologies, challenges, and findings as the project evolves.
 
-\
+---
 
 2025.3.3 updates:
 *Uploads the n-d Ising Model.py with multi-proessing that run the code in parallel, it also contains the interactive user entrying cell to analyse M vs T for different dimensions, lattice size, Random initialization, Monte Carlo steps, runs per temperatures, coupling constant J, and the external field B.
