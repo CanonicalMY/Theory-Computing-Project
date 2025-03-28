@@ -66,12 +66,12 @@ def collapse_cost_weighted(params, data_dict, x0=2.0, nbins=20):
 
 if __name__ == "__main__":
     # Lattice sizes used in your GPU simulation
-    lattice_sizes = [8, 16, 32, 64]
+    lattice_sizes = [16, 32, 64, 128]
     data = {}
 
     # Load data from .npz for each L
     for L in lattice_sizes:
-        file_L = f"output/Ising2D_GPU_L{L}.npz"
+        file_L = f"output/Ising2D_GPU_vectorized_L{L}.npz"
         if not os.path.exists(file_L):
             print(f"File {file_L} not found. Please run '2-D Ising Model FSS CuPy Support Cell.py' first.")
             continue
@@ -117,3 +117,7 @@ if __name__ == "__main__":
     plt.legend()
     plt.savefig("output/FSS_v4_Data_Collapse.jpg")
     plt.show()
+
+
+# For 2D Ising, known ~ T_c ~ 2.27, beta=1/8=0.125, nu=1
+# For 3D Ising, known ~ T_c ~ 4.51, beta~0.326, nu~0.63
