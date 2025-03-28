@@ -301,14 +301,14 @@ if __name__ == '__main__':
     ### CHANGE 1: Use narrower T-range, more steps, random init
     dimension = 2
     # We'll do multiple L in FSS, but let's define a "base" L for single-lattice plots
-    lattice_size = 16
+    lattice_size = 128
 
     random_init = True
-    steps_MC = 1000     # Increased to help with equilibration
+    steps_MC = 1250     # Increased to help with equilibration
     n_runs = 100
     T_min = 1.8         # Focus near the known 2D Tc ~ 2.27
     T_max = 2.8
-    num_T = 50          # More temperature points for finer resolution
+    num_T = 100          # More temperature points for finer resolution
     J = 1.0
     B = 0.0
 
@@ -365,7 +365,7 @@ if __name__ == '__main__':
 
     # ---------------------- Finite-Size Scaling (FSS) Analysis ----------------------
     # Example: Lattice sizes for FSS
-    lattice_sizes = [8, 16, 32, 64]
+    ##############################################################lattice_sizes = [8, 16, 32, 64]
 
     # We'll re-use the T_vals from T_min to T_max, num_T
     data = {}
