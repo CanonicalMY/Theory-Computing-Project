@@ -365,7 +365,7 @@ if __name__ == '__main__':
 
     # ---------------------- Finite-Size Scaling (FSS) Analysis ----------------------
     # Example: Lattice sizes for FSS
-    ##############################################################lattice_sizes = [8, 16, 32, 64]
+    lattice_sizes = [8, 16, 32, 64]
 
     # We'll re-use the T_vals from T_min to T_max, num_T
     data = {}
