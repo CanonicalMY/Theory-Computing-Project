@@ -11,7 +11,7 @@ from tqdm import tqdm
 import itertools
 import os
 
-def collapse_cost_weighted(params, data_dict, x0=2.0, nbins=20):
+def collapse_cost_weighted(params, data_dict, x0=0.00001, nbins=200):
     """
     Weighted cost function for data collapse:
       x = (T - T_c)*L^(1/nu),  y = M * L^(beta/nu)
@@ -92,7 +92,7 @@ if __name__ == "__main__":
     for (T_c_guess, beta_guess, nu_guess) in tqdm(grid):
         cost = collapse_cost_weighted((T_c_guess, beta_guess, nu_guess),
                                       data_dict=data,
-                                      x0=2.0, nbins=20)
+                                      x0=0.00001, nbins=200)
         if cost < best_cost:
             best_cost = cost
             best_params = (T_c_guess, beta_guess, nu_guess)
