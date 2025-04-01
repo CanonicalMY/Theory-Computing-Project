@@ -4,58 +4,69 @@ from tqdm import tqdm
 import itertools
 import os
 
-def collapse_cost(params, data_dict, nbins=50):
+def collapse_cost(params, data_dict, nbins=50, X_max=10):
     """
-    Unweighted cost function for data collapse.
-    
-    For each lattice size L, with simulation data (temps, mags) given by data_dict[L] = (T_array, M_array),
-    we transform the data as:
-    
+    Unweighted cost function for data collapse with a window.
+
+    For each lattice size L, the simulation data (temps, mags) given by data_dict[L] = (T_array, M_array)
+    is transformed as:
+
          x = (T - T_c) * L^(1/nu)
          y = M * L^(beta/nu)
-    
-    Then, the x-range is divided into nbins bins. In each bin, we compute the variance
-    of the y values (without weighting) and average over all bins.
-    
+
+    Only data points with |x| < X_max are retained.
+    Then, the x-range is divided into nbins bins. In each bin, the variance of y values is computed,
+    and the overall cost is the average variance.
+
     Parameters:
       params: tuple (T_c, beta, nu)
       data_dict: dictionary mapping lattice size L to (T_array, M_array)
       nbins: number of bins to divide the x-axis (default 50)
-    
+      X_max: maximum |x| value to include in the analysis (default 10)
+
     Returns:
-      cost: average variance of y values over the bins
+      cost: average variance of y values over the bins.
     """
     T_c, beta, nu = params
     x_all = []
     y_all = []
-    
+
     for L, (T_arr, M_arr) in data_dict.items():
         for T, M in zip(T_arr, M_arr):
             x_val = (T - T_c) * (L ** (1.0 / nu))
             y_val = M * (L ** (beta / nu))
             x_all.append(x_val)
             y_all.append(y_val)
-    
+
     x_all = np.array(x_all)
     y_all = np.array(y_all)
-    
+
+    # Only keep data points where |x| < X_max
+    mask = np.abs(x_all) < X_max
+    x_all = x_all[mask]
+    y_all = y_all[mask]
+
+    # If no data remains after filtering, return a large cost
+    if len(x_all) == 0:
+        return 1e9
+
     # Sort the data by x
     sort_idx = np.argsort(x_all)
     x_sorted = x_all[sort_idx]
     y_sorted = y_all[sort_idx]
-    
+
     # Bin the data
     x_min = x_sorted[0]
-    x_max = x_sorted[-1]
-    bin_edges = np.linspace(x_min, x_max, nbins + 1)
-    
+    x_max_val = x_sorted[-1]
+    bin_edges = np.linspace(x_min, x_max_val, nbins + 1)
+
     sum_sq = 0.0
     count = 0
     for i in range(nbins):
         left = bin_edges[i]
         right = bin_edges[i + 1]
-        mask = (x_sorted >= left) & (x_sorted < right)
-        y_bin = y_sorted[mask]
+        mask_bin = (x_sorted >= left) & (x_sorted < right)
+        y_bin = y_sorted[mask_bin]
         if len(y_bin) > 1:
             y_mean = np.mean(y_bin)
             sum_sq += np.sum((y_bin - y_mean) ** 2)
