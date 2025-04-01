@@ -121,3 +121,6 @@ if __name__ == "__main__":
     plt.legend()
     plt.savefig("output/FSS_Data_Collapse_Unweighted.jpg")
     plt.show()
+
+# For 2D Ising, known ~ T_c ~ 2.27, beta=1/8=0.125, nu=1
+# For 3D Ising, known ~ T_c ~ 4.51, beta~0.326, nu~0.63
