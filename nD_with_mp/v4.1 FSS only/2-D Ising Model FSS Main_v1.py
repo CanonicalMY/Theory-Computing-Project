@@ -115,7 +115,7 @@ if __name__ == "__main__":
     plt.ylabel("y = M * L^(beta/nu)")
     plt.title("FSS Data Collapse (GPU Data)")
     plt.legend()
-    plt.savefig("output/FSS_v4_Data_Collapse.jpg")
+    plt.savefig("output/FSS_Data_Collapse_Weighted.jpg")
     plt.show()
 
 
