@@ -4,7 +4,9 @@ from tqdm import tqdm
 import itertools
 import os
 
-def collapse_cost(params, data_dict, nbins=50, X_max=10):
+# Another set of parameters on x_max=0.16
+
+def collapse_cost(params, data_dict, nbins=15, X_max=0.15):
     """
     Unweighted cost function for data collapse with a window.
 
@@ -103,7 +105,7 @@ if __name__ == "__main__":
     print(f"FSS: Searching over {len(grid)} combinations...")
     
     for (T_c_guess, beta_guess, nu_guess) in tqdm(grid):
-        cost = collapse_cost((T_c_guess, beta_guess, nu_guess), data, nbins=50)
+        cost = collapse_cost((T_c_guess, beta_guess, nu_guess), data, nbins=15, X_max=0.15)
         if cost < best_cost:
             best_cost = cost
             best_params = (T_c_guess, beta_guess, nu_guess)
