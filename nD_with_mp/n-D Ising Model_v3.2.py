@@ -368,7 +368,7 @@ if __name__ == '__main__':
     if do_hysteresis.strip() == "1":
         try:
             T_fixed = float(input("Enter the fixed temperature (below but close to T_c) (e.g., 2.0): "))
-            B_max = float(input("Enter the maximum absolute value of the external field B (e.g., 2.0): "))
+            B_max = float(input("Enter the maximum absolute value of the external field B (e.g., 1.0): "))
             num_B = int(input("Enter the number of B points for the sweep (e.g., 50): "))
         except Exception as e:
             print("Invalid input for hysteresis parameters.", e)
