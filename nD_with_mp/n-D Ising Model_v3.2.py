@@ -301,13 +301,13 @@ if __name__ == '__main__':
     ### CHANGE 1: Use narrower T-range, more steps, random init
     dimension = 2
     # We'll do multiple L in FSS, but let's define a "base" L for single-lattice plots
-    lattice_size = 128
+    lattice_size = 16
 
-    random_init = True
-    steps_MC = 1250     # Increased to help with equilibration
-    n_runs = 100
-    T_min = 1.8         # Focus near the known 2D Tc ~ 2.27
-    T_max = 2.8
+    random_init = False
+    steps_MC = 200     # Increased to help with equilibration
+    n_runs = 50
+    T_min = 0         # Focus near the known 2D Tc ~ 2.27
+    T_max = 5
     num_T = 100          # More temperature points for finer resolution
     J = 1.0
     B = 0.0
@@ -362,6 +362,72 @@ if __name__ == '__main__':
     plt.legend()
     plt.savefig(f"output/Ising_{dimension}D_C_vs_T.jpg")
     plt.show()
+
+    do_hysteresis = input(
+        "Do you want to run the M vs B graph? (Enter 1 for yes, any other number to skip this part): ")
+    if do_hysteresis.strip() == "1":
+        try:
+            T_fixed = float(input("Enter the fixed temperature (below but close to T_c) (e.g., 2.0): "))
+            B_max = float(input("Enter the maximum absolute value of the external field B (e.g., 2.0): "))
+            num_B = int(input("Enter the number of B points for the sweep (e.g., 50): "))
+        except Exception as e:
+            print("Invalid input for hysteresis parameters.", e)
+            sys.exit(1)
+
+        # Create arrays for upward and downward sweeps
+        B_vals_up = np.linspace(-B_max, B_max, num_B)
+        B_vals_down = np.linspace(B_max, -B_max, num_B)
+
+        # Initialize spin configuration based on dimension
+        if dimension == 1:
+            Spin = initial_config(random_init, lattice_size, 1)
+        elif dimension == 2:
+            Spin = initial_config(random_init, lattice_size, 2)
+        elif dimension == 3:
+            Spin = initial_config(random_init, lattice_size, 3)
+
+        # Upward sweep (increasing B)
+        magnetizations_up = []
+        for B_val in tqdm(B_vals_up, desc="Upward sweep"):
+            if dimension == 1:
+                Spin = step_1D(Spin, steps_MC, T_fixed, J, B_val, default_periodic)
+                magnetizations_up.append(M_1D(Spin))
+            elif dimension == 2:
+                Spin = step_2D(Spin, steps_MC, T_fixed, J, B_val, default_periodic)
+                magnetizations_up.append(M_2D(Spin))
+            elif dimension == 3:
+                Spin = step_3D(Spin, steps_MC, T_fixed, J, B_val, default_periodic)
+                magnetizations_up.append(M_3D(Spin))
+
+        # Downward sweep (decreasing B)
+        magnetizations_down = []
+        for B_val in tqdm(B_vals_down, desc="Downward sweep"):
+            if dimension == 1:
+                Spin = step_1D(Spin, steps_MC, T_fixed, J, B_val, default_periodic)
+                magnetizations_down.append(M_1D(Spin))
+            elif dimension == 2:
+                Spin = step_2D(Spin, steps_MC, T_fixed, J, B_val, default_periodic)
+                magnetizations_down.append(M_2D(Spin))
+            elif dimension == 3:
+                Spin = step_3D(Spin, steps_MC, T_fixed, J, B_val, default_periodic)
+                magnetizations_down.append(M_3D(Spin))
+
+        # Plot the hysteresis loop: M vs B
+        plt.figure()
+        plt.plot(B_vals_up, magnetizations_up, 'o-', label="Increasing B")
+        plt.plot(B_vals_down, magnetizations_down, 'o-', label="Decreasing B")
+        plt.xlabel("External Field B")
+        plt.ylabel("Magnetization M")
+        plt.title(f"Hysteresis Loop at T = {T_fixed}")
+        plt.legend()
+        filename_hyst = f"output/Ising_{dimension}D_Hysteresis.jpg"
+        plt.savefig(filename_hyst)
+        plt.show()
+
+
+
+
+
 
     # ---------------------- Finite-Size Scaling (FSS) Analysis ----------------------
     # Example: Lattice sizes for FSS
